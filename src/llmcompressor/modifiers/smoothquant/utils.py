@@ -67,6 +67,20 @@ DEEPSEEK_V2_SMOOTHQUANT_MAPPINGS: List[LayerMap] = [
     ),
 ]
 
+BGE_RERANKER_SMOOTHQUANT_MAPPINGS: List[LayerMap] = [
+    LayerMap(
+        balance_layers=["re:.*attention\\.self\\.(query|key|value)"],
+        smooth_layers="re:.*attention\\.output\\.LayerNorm",
+    ),
+    LayerMap(
+        balance_layers=["re:.*intermediate\\.dense"],
+        smooth_layers="re:.*output\\.LayerNorm",
+    ),
+    LayerMap(
+        balance_layers=["re:.*output\\.dense"],
+        smooth_layers="re:.*output\\.LayerNorm",
+    ),
+]
 
 # Registry of layer mappings for different architectures
 #   Add more mappings here
@@ -80,6 +94,7 @@ MAPPINGS_REGISTRY: Dict[str, List[LayerMap]] = {
     "Phi3VForCausalLM": PHI3_VISION_SMOOTHQUANT_MAPPINGS,
     "WhisperForConditionalGeneration": WHISPER_V2_SMOOTHQUANT_MAPPINGS,
     "DeepseekV2ForCausalLM": DEEPSEEK_V2_SMOOTHQUANT_MAPPINGS,
+    "XLMRobertaForSequenceClassification": BGE_RERANKER_SMOOTHQUANT_MAPPINGS,
 }
 
 
